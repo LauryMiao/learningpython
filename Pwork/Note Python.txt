@@ -1,0 +1,68 @@
+﻿Do things once, and make it right, because time is money. So if you love a girl, make her your wife.
+
+list []
+tuple ()
+set{}
+dict {}  key-value
+*args是可变参数，args接收的是一个tuple；
+
+**kw是关键字参数，kw接收的是一个dict(key-value)。
+
+使用递归函数需要注意防止栈溢出。在计算机中，函数调用是通过栈（stack）这种数据结构实现的，每当进入一个函数调用，栈就会加一层栈帧，每当函数返回，栈就会减一层栈帧。由于栈的大小不是无限的，所以，递归调用的次数过多，会导致栈溢出。
+尾递归是指，在函数返回的时候，调用自身本身，并且，return语句不能包含表达式。这样，编译器或者解释器就可以把尾递归做优化，使递归本身无论调用多少次，都只占用一个栈帧，不会出现栈溢出的情况。
+
+def fact(n):
+    return fact_iter(n, 1)
+
+def fact_iter(num, product):
+    if num == 1:
+        return product
+    return fact_iter(num - 1, num * product)
+
+Python标准的解释器没有针对尾递归做优化，任何递归函数都存在栈溢出的问题
+
+默认情况下，dict迭代的是key。如果要迭代value，可以用for value in d.values()，如果要同时迭代key和value，可以用for k, v in d.items()。
+
+默认情况下，dict迭代的是key。如果要迭代value，可以用for value in d.values()，如果要同时迭代key和value，可以用for k, v in d.items()。
+
+写列表生成式时，把要生成的元素x * x放到前面，后面跟for循环，就可以把list创建出来，十分有用，多写几次，很快就可以熟悉这种语法。
+
+要创建一个generator，有很多种方法。第一种方法很简单，只要把一个列表生成式的[]改成()，就创建了一个generator：
+当然，上面这种不断调用next(g)实在是太变态了，正确的方法是使用for循环，因为generator也是可迭代对象：
+
+
+可以直接作用于for循环的数据类型有以下几种：
+
+一类是集合数据类型，如list、tuple、dict、set、str等；
+
+一类是generator，包括生成器和带yield的generator function。
+
+这些可以直接作用于for循环的对象统称为可迭代对象：Iterable。
+
+可以使用isinstance()判断一个对象是否是Iterable对象：
+
+凡是可作用于for循环的对象都是Iterable类型；
+
+凡是可作用于next()函数的对象都是Iterator类型，它们表示一个惰性计算的序列；
+
+集合数据类型如list、dict、str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。
+
+Python的for循环本质上就是通过不断调用next()函数实现的
+
+当函数的参数个数太多，需要简化时，使用functools.partial可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单。
+
+类似__xxx__这样的变量是特殊变量，可以被直接引用，但是有特殊用途，__author__，__name__，类似_xxx和__xxx这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；
+外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。
+
+所以，面向对象的设计思想是抽象出Class，根据Class创建Instance。
+
+面向对象的抽象程度又比函数要高，因为一个Class既包含数据，又包含操作数据的方法。
+
+类是创建实例的模板，而实例则是一个一个具体的对象，各个实例拥有的数据都互相独立，互不影响；
+
+方法就是与实例绑定的函数，和普通函数不同，方法可以直接访问实例的数据；
+
+通过在实例上调用方法，我们就直接操作了对象内部的数据，但无需知道方法内部的实现细节。
+
+和静态语言不同，Python允许对实例变量绑定任何数据，也就是说，对于两个实例变量，虽然它们都是同一个类的不同实例，但拥有的变量名称都可能不同：
+如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线__，在Python中，实例的变量名如果以__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问
